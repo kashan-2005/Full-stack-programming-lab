@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 6 - Mini University Portal</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: darkblue;
+        }
+
+        .box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px gray;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 8px 12px;
+            background: darkblue;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: navy;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Mini University Portal</h1>
+
+<div class="box">
+    <button onclick="saveData()">Save Students Data</button>
+</div>
+
+<div id="output" class="box"></div>
+
+<script>
+
+    // ==============================
+    // CLASS (Student)
+    // ==============================
+    class Student {
+        constructor(id, name) {
+            this.id = id;
+            this.name = name;
+            this.courses = new Set();  // SET for unique courses
+        }
+
+        registerCourse(course) {
+            this.courses.add(course);
+        }
+
+        getDetails() {
+            return `
+                <h3>${this.name}</h3>
+                ID: ${this.id}<br>
+                Courses: ${[...this.courses].join(", ")}<br><br>
+            `;
+        }
+    }
+
+    // ==============================
+    // MAP (Store Students)
+    // ==============================
+    let university = new Map();
+
+    // Create Students
+    const s1 = new Student(1, "Ali");
+    s1.registerCourse("AI");
+    s1.registerCourse("ML");
+    s1.registerCourse("AI"); // duplicate (Set prevents it)
+
+    const s2 = new Student(2, "Sara");
+    s2.registerCourse("Web Dev");
+    s2.registerCourse("DB");
+
+    // Store in Map
+    university.set(s1.id, s1);
+    university.set(s2.id, s2);
+
+    // Display Students
+    let output = document.getElementById("output");
+
+    output.innerHTML = "<h2>Registered Students</h2>";
+
+    university.forEach(student => {
+        output.innerHTML += student.getDetails();
+    });
+
+    output.innerHTML += "Total Students: " + university.size;
+
+    // ==============================
+    // PROMISE (Simulate Save)
+    // ==============================
+
+    function saveData() {
+        let savingPromise = new Promise((resolve, reject) => {
+
+            let success = true;
+
+            setTimeout(() => {
+                if (success) {
+                    resolve("Data Saved Successfully!");
+                } else {
+                    reject("Error Saving Data!");
+                }
+            }, 2000);
+        });
+
+        savingPromise
+            .then(message => {
+                alert(message);
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
+
+</script>
+
+</body>
+</html>

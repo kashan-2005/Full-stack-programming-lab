@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 1 - Student Management</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(to right, #e0eafc, #cfdef3);
+            margin: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .card {
+            background: #f9f9f9;
+            padding: 15px;
+            border-left: 5px solid #3498db;
+            margin-bottom: 15px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Student Management System</h1>
+<div class="container" id="output"></div>
+
+<script>
+class Student {
+    constructor(id, name, semester, courses) {
+        this.id = id;
+        this.name = name;
+        this.semester = semester;
+        this.courses = courses;
+    }
+}
+
+const students = [
+    new Student(1, "Ali", 6, ["JS", "HTML"]),
+    new Student(2, "Ahmed", 5, ["CSS", "React"]),
+    new Student(3, "Sara", 4, ["Node", "DB"])
+];
+
+let output = document.getElementById("output");
+
+students.forEach(s => {
+    output.innerHTML += `
+    <div class="card">
+        <strong>${s.name}</strong><br>
+        ID: ${s.id}<br>
+        Semester: ${s.semester}<br>
+        Courses: ${s.courses.join(", ")}
+    </div>`;
+});
+</script>
+
+</body>
+</html>

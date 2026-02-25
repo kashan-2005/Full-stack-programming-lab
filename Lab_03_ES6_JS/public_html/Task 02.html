@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 2 - Shopping Cart</title>
+    <style>
+        body { font-family: Arial; background:#f5f7fa; margin:20px; }
+        h1 { text-align:center; }
+        .container {
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 4px 8px rgba(0,0,0,0.2);
+        }
+        .card {
+            background:#ecf0f1;
+            padding:15px;
+            border-radius:6px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Online Shopping Cart</h1>
+<div class="container" id="output"></div>
+
+<script>
+function addToCart(...items) {
+    return items;
+}
+
+let cart = addToCart("Shoes", "Watch", "Shirt");
+let newCart = [...cart];
+let [firstItem, ...remaining] = newCart;
+
+document.getElementById("output").innerHTML = `
+<div class="card">
+    Total Items: ${newCart.length}<br>
+    First Item: ${firstItem}<br>
+    Remaining Items: ${remaining.join(", ")}
+</div>`;
+</script>
+
+</body>
+</html>

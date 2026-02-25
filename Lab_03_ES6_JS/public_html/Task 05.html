@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 5 - Product Catalog</title>
+    <style>
+        body { font-family: Arial; background:#f0f2f5; margin:20px; }
+        .box {
+            background:white;
+            padding:20px;
+            border-radius:10px;
+            box-shadow:0 4px 8px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+<h1>Product Catalog</h1>
+<div class="box" id="output"></div>
+
+<script>
+let products = new Map([
+    [1,{name:"Laptop",price:1000}],
+    [2,{name:"Mobile",price:500}],
+    [3,{name:"Keyboard",price:100}],
+    [4,{name:"Mouse",price:50}],
+    [5,{name:"Monitor",price:300}]
+]);
+
+let product = products.get(2);
+products.delete(5);
+
+document.getElementById("output").innerHTML = `
+Product ID 2: ${product.name} - $${product.price}<br>
+Total Products: ${products.size}
+`;
+</script>
+
+</body>
+</html>
