@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    /* Using a dark maroon/brown color to approximate the background of the mockup */
+    background-color: #2b0b0d; 
+    color: #333333;
+    font-family: 'Open Sans', Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+  }
+}
+
+@layer utilities {
+  .talyllyn-modal {
+    @apply bg-white shadow-2xl relative w-full max-w-3xl mx-auto flex flex-col items-center;
+  }
+  
+  .talyllyn-header-bar {
+    @apply w-full h-12 bg-[#8c171d] absolute top-[4rem] left-0 z-0;
+  }
+
+  .talyllyn-logo-container {
+    @apply w-32 h-32 rounded-full bg-white shadow-lg flex items-center justify-center z-10 border-4 border-white mt-4;
+  }
+
+  .talyllyn-section-header {
+    @apply bg-[#0c4a7c] text-white font-bold px-4 py-2 rounded-md mb-4 text-sm tracking-wide shadow-sm;
+  }
+
+  .talyllyn-input {
+    @apply w-full border border-gray-300 rounded-md px-3 py-1.5 focus:outline-none focus:border-[#0c4a7c] focus:ring-1 focus:ring-[#0c4a7c] text-sm bg-gray-50;
+  }
+  
+  .talyllyn-label {
+    @apply text-sm text-gray-600 text-right pr-4 pt-1.5;
+  }
+
+  .talyllyn-btn {
+    @apply bg-[#0c4a7c] hover:bg-[#093458] text-white px-6 py-2 rounded font-bold text-sm transition-colors;
+  }
+
+  .asterisk {
+    @apply text-red-600 font-bold ml-1;
+  }
+}
