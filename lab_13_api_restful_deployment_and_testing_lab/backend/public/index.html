@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RESTful API Lab Dashboard - Kashan Zafar (232051)</title>
+    <!-- Google Fonts: Outfit & Inter for premium typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Background abstract gradient glow items for modern look -->
+    <div class="glow-bg-1"></div>
+    <div class="glow-bg-2"></div>
+
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i class="fa-solid fa-network-wired logo-icon"></i>
+                <div class="logo-text">
+                    <h1>Lab 13 RESTful Dashboard</h1>
+                    <p>API Deployment & Verification Suite</p>
+                </div>
+            </div>
+            <div class="student-badge">
+                <div class="badge-avatar">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div class="badge-details">
+                    <span class="student-name">Kashan Zafar</span>
+                    <span class="student-id">ID: 232051</span>
+                </div>
+                <div class="badge-divider"></div>
+                <div class="badge-details secondary-details">
+                    <span class="student-partner">Kashan Zafar (232051)</span>
+                    <span class="instructor-name">Instr: Mr. Sharif Hussain</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN LAYOUT -->
+        <main class="dashboard-grid">
+
+            <!-- LEFT COLUMN: AUTH & PATIENTS CRUD -->
+            <section class="dashboard-column col-left">
+                <!-- AUTH PANEL -->
+                <div class="glass-card auth-card" id="auth-panel">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-user-shield"></i> Role-Based Auth Control</h2>
+                        <span class="status-indicator" id="auth-status-dot"></span>
+                    </div>
+
+                    <!-- Login/Register View -->
+                    <div id="auth-logged-out" class="auth-view active">
+                        <p class="section-description">Register an account and sign in to obtain a JWT token for
+                            Patients Database operations.</p>
+                        <div class="form-toggle-buttons">
+                            <button id="toggle-to-login" class="toggle-btn active">Sign In</button>
+                            <button id="toggle-to-register" class="toggle-btn">Sign Up</button>
+                        </div>
+
+                        <form id="auth-form" class="auth-inputs">
+                            <div class="input-group">
+                                <i class="fa-solid fa-envelope input-icon"></i>
+                                <input type="text" id="auth-username" placeholder="Username" required>
+                            </div>
+                            <div class="input-group">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="auth-password" placeholder="Password" required>
+                            </div>
+                            <!-- Register Role Field -->
+                            <div class="input-group role-selector-group hidden" id="register-role-wrapper">
+                                <i class="fa-solid fa-users-cog input-icon"></i>
+                                <select id="auth-role">
+                                    <option value="user">User Role (Read-Only Patients)</option>
+                                    <option value="admin">Admin Role (Full Patient CRUD)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="primary-btn btn-full" id="auth-submit-btn">
+                                <span>Sign In</span>
+                                <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Logged In View -->
+                    <div id="auth-logged-in" class="auth-view">
+                        <div class="logged-in-profile">
+                            <div class="profile-icon">
+                                <i class="fa-solid fa-user-check"></i>
+                            </div>
+                            <div class="profile-info">
+                                <h3 id="logged-user-display">Hammad Shahzad</h3>
+                                <span class="role-badge" id="logged-role-display">Admin</span>
+                            </div>
+                        </div>
+                        <div class="token-display-box">
+                            <label>Active JWT Token</label>
+                            <div class="token-string-container">
+                                <span id="token-string">eyJhbGciOiJIUzI1NiIsIn...</span>
+                                <button id="copy-token-btn" title="Copy Token"><i
+                                        class="fa-regular fa-copy"></i></button>
+                            </div>
+                        </div>
+                        <button id="logout-btn" class="secondary-btn btn-full">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- PATIENTS CRUD PANEL -->
+                <div class="glass-card patients-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-hospital-user"></i> Patient Records Manager</h2>
+                        <div class="patient-actions">
+                            <button class="icon-btn refresh-btn" id="refresh-patients-btn" title="Refresh Database"><i
+                                    class="fa-solid fa-rotate"></i></button>
+                            <button class="primary-btn btn-sm" id="new-patient-btn"><i class="fa-solid fa-plus"></i> Add
+                                New</button>
+                        </div>
+                    </div>
+
+                    <div class="patients-content-wrapper">
+                        <!-- Patient Form Modal/Drawer (In-card toggle) -->
+                        <div id="patient-form-container" class="patient-form-overlay hidden">
+                            <div class="form-title-bar">
+                                <h3 id="patient-form-title">Add New Patient</h3>
+                                <button class="close-form-btn" id="close-patient-form"><i
+                                        class="fa-solid fa-xmark"></i></button>
+                            </div>
+                            <form id="patient-form">
+                                <input type="hidden" id="patient-id">
+                                <div class="form-grid">
+                                    <div class="input-group">
+                                        <i class="fa-solid fa-signature input-icon"></i>
+                                        <input type="text" id="patient-name" placeholder="Full Name" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <i class="fa-solid fa-hourglass-half input-icon"></i>
+                                        <input type="number" id="patient-age" placeholder="Age" required min="0"
+                                            max="150">
+                                    </div>
+                                    <div class="input-group">
+                                        <i class="fa-solid fa-file-medical input-icon"></i>
+                                        <input type="text" id="patient-disease" placeholder="Diagnosed Disease"
+                                            required>
+                                    </div>
+                                    <div class="input-group">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                        <input type="text" id="patient-contact" placeholder="Contact Number" required>
+                                    </div>
+                                </div>
+                                <div class="form-buttons">
+                                    <button type="button" class="secondary-btn" id="cancel-patient-form">Cancel</button>
+                                    <button type="submit" class="primary-btn" id="save-patient-btn">Save Record</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Database Status Alert -->
+                        <div class="db-status-bar alert-info" id="db-status-message">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Sign in to fetch records from the MongoDB database.</span>
+                        </div>
+
+                        <!-- Patients Directory List -->
+                        <div class="patients-list" id="patients-list-element">
+                            <!-- Injected dynamically -->
+                            <div class="empty-list-placeholder">
+                                <i class="fa-solid fa-database placeholder-icon"></i>
+                                <p>No Records Loaded</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RIGHT COLUMN: WEATHER & NEWS -->
+            <section class="dashboard-column col-right">
+                <!-- TASK 1: WEATHER FORECAST API -->
+                <div class="glass-card weather-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-cloud-sun-rain animate-pulse"></i> Weather Forecast API</h2>
+                        <span class="badge badge-accent">Task 1</span>
+                    </div>
+                    <p class="section-description">Dynamic weather metrics integration calling OpenWeather API service
+                        parameters.</p>
+
+                    <div class="search-bar">
+                        <div class="search-input-wrapper">
+                            <i class="fa-solid fa-city search-icon"></i>
+                            <input type="text" id="weather-city-input"
+                                placeholder="Enter City Name (e.g. London, Lahore, Tokyo)" value="London">
+                        </div>
+                        <button class="primary-btn search-btn" id="get-weather-btn">
+                            <span>Search</span>
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+
+                    <div class="weather-result-container" id="weather-result">
+                        <!-- Dynamic weather state visualization -->
+                        <div class="weather-data-display" id="weather-data-display">
+                            <div class="weather-meta">
+                                <div class="city-details">
+                                    <h3 id="weather-city">London</h3>
+                                    <span class="source-tag" id="weather-source">OpenWeather API</span>
+                                </div>
+                                <div class="weather-icon-box" id="weather-icon-div">
+                                    <i class="fa-solid fa-cloud weather-icon-large cloudy"></i>
+                                </div>
+                            </div>
+                            <div class="weather-metrics">
+                                <div class="metric-main">
+                                    <span class="temp-val" id="weather-temp">15.4</span>
+                                    <span class="temp-unit">°C</span>
+                                </div>
+                                <div class="metrics-grid">
+                                    <div class="metric-item">
+                                        <i class="fa-solid fa-wind metric-icon"></i>
+                                        <div class="metric-text">
+                                            <span class="metric-label">Condition</span>
+                                            <span class="metric-value" id="weather-condition">Cloudy</span>
+                                        </div>
+                                    </div>
+                                    <div class="metric-item">
+                                        <i class="fa-solid fa-droplet metric-icon"></i>
+                                        <div class="metric-text">
+                                            <span class="metric-label">Humidity</span>
+                                            <span class="metric-value" id="weather-humidity">82%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TASK 2: NEWS HEADLINES API -->
+                <div class="glass-card news-card">
+                    <div class="card-header">
+                        <h2><i class="fa-solid fa-newspaper"></i> News Headlines API</h2>
+                        <span class="badge badge-accent">Task 2</span>
+                    </div>
+                    <p class="section-description">Dynamic route parameters to filter the top news headlines (Slicing 5
+                        to 10 articles max).</p>
+
+                    <div class="news-controls">
+                        <div class="select-wrapper">
+                            <i class="fa-solid fa-globe select-icon"></i>
+                            <select id="news-country-select">
+                                <option value="us">United States (US)</option>
+                                <option value="gb">United Kingdom (GB)</option>
+                                <option value="in" selected>India (IN)</option>
+                                <option value="ca">Canada (CA)</option>
+                                <option value="au">Australia (AU)</option>
+                                <option value="fr">France (FR)</option>
+                                <option value="de">Germany (DE)</option>
+                                <option value="jp">Japan (JP)</option>
+                                <option value="sa">Saudi Arabia (SA)</option>
+                            </select>
+                        </div>
+                        <button class="primary-btn search-btn" id="get-news-btn">
+                            <span>Get News</span>
+                            <i class="fa-solid fa-arrow-down-short-wide"></i>
+                        </button>
+                    </div>
+
+                    <!-- News feed list container -->
+                    <div class="news-feed-container">
+                        <div class="feed-source-header">
+                            <span>Country Headlines Feed</span>
+                            <span class="source-tag" id="news-source">NewsAPI</span>
+                        </div>
+                        <div class="news-list" id="news-list-element">
+                            <!-- Injected dynamically -->
+                            <div class="empty-list-placeholder">
+                                <i class="fa-solid fa-rss placeholder-icon animate-pulse"></i>
+                                <p>Click "Get News" to load Headlines feed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="app-footer">
+            <p>Full Stack Programming Lab 13 Submission • Faculty of Software Engineering</p>
+            <p class="framework-tags">Node.js • Express.js • MongoDB Compass • React.js (Manual concepts) • Axios •
+                Dotenv</p>
+        </footer>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
