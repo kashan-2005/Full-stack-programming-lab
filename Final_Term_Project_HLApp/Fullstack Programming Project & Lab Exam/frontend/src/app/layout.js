@@ -1,0 +1,19 @@
+import './globals.css';
+import Providers from '@/components/Providers';
+
+export const metadata = {
+  title: 'MediCare – Healthcare Appointment System',
+  description: 'Book and manage doctor appointments, treatments, and prescriptions securely.',
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>
+        <Providers>
+          {children}
+        </Providers>
+      </body>
+    </html>
+  );
+}
